@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customizable Landing Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
+        /* Sidebar Control Panel */
+        .control-panel {
+            width: 300px;
+            background-color: #f4f5f7;
+            padding: 20px;
+            border-right: 1px solid #dcdfe6;
+            box-sizing: border-box;
+        }
+        .control-panel h3 { margin-top: 0; color: #333; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px;}
+        .form-group input[type="text"], .form-group input[type="color"] {
+            width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;
+        }
+        .btn-submit {
+            background-color: #007bff; color: white; border: none; padding: 10px 15px; 
+            width: 100%; border-radius: 4px; cursor: pointer; font-size: 16px;
+        }
+        .btn-submit:hover { background-color: #0056b3; }
+
+        /* Preview Area */
+        .preview-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            transition: background-color 0.3s ease;
+        }
+        .preview-area h1 { font-size: 3rem; margin-bottom: 10px; color: #111; }
+        .preview-area p { font-size: 1.5rem; color: #666; margin-bottom: 30px; }
+        .cta-button {
+            background-color: #28a745; color: white; padding: 15px 30px; 
+            font-size: 1.2rem; border-radius: 5px; text-decoration: none; font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="control-panel">
+        <h3>Page Customizer</h3>
+        <form action="/update-settings" method="POST" th:object="${settings}">
+            <div class="form-group">
+                <label>Main Title</label>
+                <input type="text" name="title" th:value="*{title}" />
+            </div>
+            <div class="form-group">
+                <label>Subtitle</label>
+                <input type="text" name="subtitle" th:value="*{subtitle}" />
+            </div>
+            <div class="form-group">
+                <label>Background Color</label>
+                <input type="color" name="backgroundColor" th:value="*{backgroundColor}" />
+            </div>
+            <div class="form-group">
+                <label>Button Text</label>
+                <input type="text" name="ctaText" th:value="*{ctaText}" />
+            </div>
+            <button type="submit" class="btn-submit">Apply Changes</button>
+        </form>
+    </div>
+
+    <div class="preview-area" th:style="'background-color: ' + ${settings.backgroundColor} + ';'">
+        <h1 th:text="${settings.title}">Main Title</h1>
+        <p th:text="${settings.subtitle}">Subtitle text goes here.</p>
+        <a href="#" class="cta-button" th:text="${settings.ctaText}">Action Button</a>
+    </div>
+
+</body>
+</html>
