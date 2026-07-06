@@ -37,7 +37,7 @@ jobs:
       # 4. Point Maven to your JFrog target repositories
       - name: Configure Maven Repositories
         run: |
-          jf mvnc --server-id-resolve=ci-server --server-id-deploy=ci-server --repo-resolve-releases=maven-remote --repo-resolve-snapshots=maven-snapshots --repo-deploy-releases=maven-releases --repo-deploy-snapshots=maven-snapshots
+          jf mvnc --server-id-resolve=ci-server --server-id-deploy=ci-server --repo-resolve-releases=Maven_frogbot_test --repo-resolve-snapshots=maven-snapshots --repo-deploy-releases=maven-releases --repo-deploy-snapshots=maven-snapshots
 
       # 5. Compile, run tests, package, and upload artifacts to JFrog
       - name: Build and Publish Package
@@ -53,7 +53,7 @@ jobs:
       # 7. Build Docker image
       - name: Build Docker Image
         env:
-          IMAGE_NAME: soltest.jfrog.io/docker-local/petclinic:${{ github.run_number }}
+          IMAGE_NAME: soltest.jfrog.io/Maven_frogbot_test/LandingPage:${{ github.run_number }}
         run: |
           jf docker build -t $IMAGE_NAME .
           jf docker push $IMAGE_NAME --build-name=$JFROG_CLI_BUILD_NAME --build-number=$JFROG_CLI_BUILD_NUMBER
